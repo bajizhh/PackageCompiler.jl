@@ -1,0 +1,9 @@
+name = "PackageCompiler"
+uuid = "2fc16c30-b659-11e8-244c-c1d5a1117396"
+authors = ["bajizhh <bajizhh@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
+SnoopCompile = "aa65fe97-06da-5843-b5b1-d5d13cad87d2"
+WinRPM = "c17dfb99-b4f7-5aad-8812-456da1ad7187"

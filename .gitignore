@@ -15,3 +15,7 @@ sysimg
 hello
 hello.exe
 packages
+
+
+.*
+*.log
