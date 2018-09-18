@@ -226,12 +226,18 @@ function build_object(
   pushfirst!(Base.DEPOT_PATH, \"$cache_dir\") # save precompiled modules locally
   include(\"$juliaprog\") # include Julia program file"
     else
-        expr = "
-  empty!(Base.LOAD_CACHE_PATH) # reset / remove any builtin paths
-  push!(Base.LOAD_CACHE_PATH, \"$cache_dir\") # enable usage of precompiled files
-  Sys.__init__(); Base.early_init(); # JULIA_HOME is not defined, initializing manually
-  include(\"$juliaprog\") # include Julia program file
-  empty!(Base.LOAD_CACHE_PATH) # reset / remove build-system-relative paths"
+  #       expr = "
+  # empty!(Base.LOAD_CACHE_PATH) # reset / remove any builtin paths
+  # push!(Base.LOAD_CACHE_PATH, \"$cache_dir\") # enable usage of precompiled files
+  # Sys.__init__(); Base.early_init(); # JULIA_HOME is not defined, initializing manually
+  # include(\"$juliaprog\") # include Julia program file
+  # empty!(Base.LOAD_CACHE_PATH) # reset / remove build-system-relative paths"
+      expr = "
+    empty!(Base.LOAD_CACHE_PATH) # reset / remove any builtin paths
+    push!(Base.LOAD_CACHE_PATH, \"$cache_dir\") # enable usage of precompiled files
+    Sys.__init__(); # JULIA_HOME is not defined, initializing manually
+    include(\"$juliaprog\") # include Julia program file
+    empty!(Base.LOAD_CACHE_PATH) # reset / remove build-system-relative paths"
     end
     # TODO: verify if this can be used with Julia v0.7 too (currently it does not seem to work), or how to precompile modules
     if !julia_v07 && compilecache == "yes"

@@ -49,9 +49,9 @@ uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 
 [[LibCURL]]
 deps = ["BinaryProvider", "Compat", "Libdl", "Pkg", "Printf"]
-git-tree-sha1 = "ffb95ae47142be781d9f59af86b724d921acb6c1"
+git-tree-sha1 = "6339c87cb76923a3cf947fcd213cbc364355c9c9"
 uuid = "b27032c2-a3e7-50c8-80cd-2d36dbcbfd21"
-version = "0.4.0"
+version = "0.4.1"
 
 [[LibExpat]]
 deps = ["Compat", "Pkg"]

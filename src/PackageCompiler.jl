@@ -47,7 +47,7 @@ function copy_system_image(src, dest, ignore_missing = false)
             end
             mv(destfile, destfile * ".backup", remove_destination = true)
         end
-        info("Copying system image: $srcfile to $destfile")
+        @info("Copying system image: $srcfile to $destfile")
         cp(srcfile, destfile, remove_destination = true)
     end
 end
@@ -56,11 +56,11 @@ julia_cpu_target(x) = error("CPU target needs to be a string or `nothing`")
 julia_cpu_target(x::String) = x # TODO match against available targets
 if julia_v07
     function julia_cpu_target(::Nothing)
-        replace(Base.julia_cmd().exec[2], "-C", "")
+        replace(Base.julia_cmd().exec[2], "-C" => "")
     end
 else
     function julia_cpu_target(::Void)
-        replace(Base.julia_cmd().exec[2], "-C", "")
+        replace(Base.julia_cmd().exec[2], "-C" => "")
     end
 end
 
@@ -141,22 +141,22 @@ function compile_package(packages::Tuple{String, String}...; force = false, reus
             backup = syspath * ".packagecompiler_backup"
             isfile(backup) || mv(syspath, backup)
             cp(imgfile, syspath)
-            info(
+            @info(
                 "Replaced system image successfully. Next start of julia will load the newly compiled system image.
                 If you encounter any errors with the new julia image, try `PackageCompiler.revert([debug = false])`"
             )
         catch e
             warn("An error has occured while replacing sysimg files:")
             warn(e)
-            info("Recovering old system image from backup")
+            @info("Recovering old system image from backup")
             # if any file is missing in default system image, revert!
             if !isfile(syspath)
-                info("$syspath missing. Reverting!")
+                @info("$syspath missing. Reverting!")
                 revert(debug)
             end
         end
     else
-        info("""
+        @info("""
             Not replacing system image.
             You can start julia with julia -J $(imgfile) to load the compiled files.
         """)

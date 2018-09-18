@@ -39,13 +39,13 @@ function compile_system_image(sysimg_path, cpu_target = nothing; debug = false)
 
         # Start by building inference.{ji,o}
         inference_path = joinpath(dirname(sysimg_path), "inference")
-        info("Building inference.o")
-        info("$julia -C $cpu_target --output-ji $compiler_path.ji --output-o $compiler_path.o $compiler")
+        @info("Building inference.o")
+        @info("$julia -C $cpu_target --output-ji $compiler_path.ji --output-o $compiler_path.o $compiler")
         run(`$julia -C $cpu_target --output-ji $compiler_path.ji --output-o $compiler_path.o $compiler`)
 
         # Bootstrap off of that to create sys.{ji,o}
-        info("Building sys.o")
-        info("$julia -C $cpu_target --output-ji $sysimg_path.ji --output-o $sysimg_path.o -J $compiler_path.ji --startup-file=no sysimg.jl")
+        @info("Building sys.o")
+        @info("$julia -C $cpu_target --output-ji $sysimg_path.ji --output-o $sysimg_path.o -J $compiler_path.ji --startup-file=no sysimg.jl")
         run(`$julia -C $cpu_target --output-ji $sysimg_path.ji --output-o $sysimg_path.o -J $compiler_path.ji --startup-file=no sysimg.jl`)
 
         build_shared(
